@@ -11,18 +11,36 @@ public class Estacionamento {
 
     // Metodo para cadastrar uma vaga
     public void cadastrarVaga(int numero, String tipoVeiculo) {
-        Vaga vaga = new Vaga (numero, tipoVeiculo);
-        vagas.add(vaga);
-        System.out.println("Vaga cadastrada com sucesso");
+        for (Vaga vaga : vagas){
+            if (vaga.getNumero() == numero){
+                System.out.println("O número da vaga já é de uma vaga existente, digite um número diferente.");
+                return;
+            }
+        }
+        if (tipoVeiculo.equalsIgnoreCase("moto") || 
+        tipoVeiculo.equalsIgnoreCase("carro") || 
+        tipoVeiculo.equalsIgnoreCase("caminhão")) {
+            Vaga vaga = new Vaga (numero, tipoVeiculo);
+            vagas.add(vaga);
+            System.out.println("Vaga cadastrada com sucesso"); 
+    }
+    else {
+        System.out.println("Digite um tipo de veículo válido!");
+    }
 }
     //Registrar entrada dos veiculos e saber se a vaga esta ocupada
-public void registrarEntrada(int numero, String placaVeiculo){
+public void registrarEntrada(int numero, String placaVeiculo, String tipoEntrada){
     for (Vaga vaga : vagas){
-        if(vaga.getNumero() == numero & vaga.getStatus().equals("livre")){
+        if(vaga.getNumero() == numero & vaga.getStatus().equals("livre") & vaga.getTipoVeiculo().equalsIgnoreCase(tipoEntrada)){
             vaga.ocuparVaga(placaVeiculo);
-            System.out.println("Veículo registrado com sucesso na vaga " + numero);
+            System.out.println("Veículo registrado com sucesso na vaga " + numero + ".");
             return;
         }
+            if (vaga.getTipoVeiculo().equalsIgnoreCase(tipoEntrada)){
+                System.out.println("O tipo do veículo deve ser igual ao tipo permitido pela vaga.");
+                return;
+            }
+        
     }
     System.out.println("Vaga não encontrada ou já ocupada.");
 }
@@ -50,7 +68,7 @@ public void consultarVagasLivres(String tipoVeiculo) {
 public void listarTodasVagas() {
     System.out.println("Lista de todas as vagas:");
     for (Vaga vaga : vagas) {
-        System.out.println("Vaga: " + vaga.getNumero() + " - Status: " + vaga.getStatus() + " - Para veículos do tipo: " + vaga.getTipoVeiculo());
+        System.out.println("Vaga: " + vaga.getNumero() + " - Status: " + vaga.getStatus() + " - Tipo de veículo: " + vaga.getTipoVeiculo());
         if ("ocupada".equals(vaga.getStatus())){
             System.out.println("Placa do veículo: " + vaga.getPlacaVeiculo() + "\n");
         }
