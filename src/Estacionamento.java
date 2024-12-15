@@ -8,6 +8,9 @@ public class Estacionamento {
     public Estacionamento() {
         vagas = new ArrayList<>();
     }
+    public List<Vaga> getVagas() {
+        return new ArrayList<>(vagas); 
+    }
 
     // Metodo para cadastrar uma vaga
     public void cadastrarVaga(int numero, String tipoVeiculo) {
@@ -31,15 +34,11 @@ public class Estacionamento {
     //Registrar entrada dos veiculos e saber se a vaga esta ocupada
 public void registrarEntrada(int numero, String placaVeiculo, String tipoEntrada){
     for (Vaga vaga : vagas){
-        if(vaga.getNumero() == numero & vaga.getStatus().equals("livre") & vaga.getTipoVeiculo().equalsIgnoreCase(tipoEntrada)){
+        if(vaga.getNumero() == numero){
             vaga.ocuparVaga(placaVeiculo);
             System.out.println("Veículo registrado com sucesso na vaga " + numero + ".");
             return;
         }
-            if (vaga.getTipoVeiculo().equalsIgnoreCase(tipoEntrada)){
-                System.out.println("O tipo do veículo deve ser igual ao tipo permitido pela vaga.");
-                return;
-            }
         
     }
     System.out.println("Vaga não encontrada ou já ocupada.");
@@ -57,11 +56,18 @@ System.out.println("Vaga não encontrada ou já está livre.");
 }
 //consultar as vagas que estao disponiveis
 public void consultarVagasLivres(String tipoVeiculo) {
-    System.out.println("Vagas disponíveis para " + tipoVeiculo + ":");
-    for (Vaga vaga : vagas) {
-        if (vaga.getTipoVeiculo().equalsIgnoreCase(tipoVeiculo) && vaga.getStatus().equals("livre")) {
-            System.out.println("Vaga número " + vaga.getNumero());
+    if(tipoVeiculo.equalsIgnoreCase("carro")||tipoVeiculo.equalsIgnoreCase("moto")||tipoVeiculo.equalsIgnoreCase("caminhão")){
+        System.out.println("Vagas disponíveis para " + tipoVeiculo + ":");
+        for (Vaga vaga : vagas) {
+            if (vaga.getTipoVeiculo().equalsIgnoreCase(tipoVeiculo) && vaga.getStatus().equals("livre")) {
+                System.out.println("Vaga número " + vaga.getNumero());
+                return;
+    }
+   
         }
+    }
+    else{
+        System.out.println("Não existe um veículo com esse nome.");
     }
 }
 //Listar todas as vagas, preenchidas ou livres
