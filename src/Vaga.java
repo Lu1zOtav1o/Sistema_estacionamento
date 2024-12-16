@@ -1,5 +1,7 @@
 
-public class Vaga {
+import java.io.Serializable;
+
+public class Vaga implements Serializable {
     private int numero;
     private String tipoVeiculo;
     private String  status;

@@ -11,6 +11,9 @@ public class Estacionamento {
     public List<Vaga> getVagas() {
         return new ArrayList<>(vagas); 
     }
+    public void setVagas(List<Vaga> vagas) {
+        this.vagas = vagas;
+    }
 
     // Metodo para cadastrar uma vaga
     public void cadastrarVaga(int numero, String tipoVeiculo) {
@@ -56,29 +59,23 @@ System.out.println("Vaga não encontrada ou já está livre.");
 }
 //consultar as vagas que estao disponiveis
 public void consultarVagasLivres(String tipoVeiculo) {
-    if(tipoVeiculo.equalsIgnoreCase("carro")||tipoVeiculo.equalsIgnoreCase("moto")||tipoVeiculo.equalsIgnoreCase("caminhão")){
+    if(tipoVeiculo.equalsIgnoreCase("carro") || tipoVeiculo.equalsIgnoreCase("moto") || tipoVeiculo.equalsIgnoreCase("caminhão")) {
         System.out.println("Vagas disponíveis para " + tipoVeiculo + ":");
+        boolean encontrouVaga = false; // Variável para verificar se encontrou alguma vaga
         for (Vaga vaga : vagas) {
             if (vaga.getTipoVeiculo().equalsIgnoreCase(tipoVeiculo) && vaga.getStatus().equals("livre")) {
                 System.out.println("Vaga número " + vaga.getNumero());
-                return;
-    }
-   
+                encontrouVaga = true; // Marca que encontrou ao menos uma vaga
+            }
         }
-    }
-    else{
+        
+        if (!encontrouVaga) {
+            System.out.println("Não há vagas disponíveis para " + tipoVeiculo + ".");
+        }
+    } else {
         System.out.println("Não existe um veículo com esse nome.");
     }
 }
-//Listar todas as vagas, preenchidas ou livres
-public void listarTodasVagas() {
-    System.out.println("Lista de todas as vagas:");
-    for (Vaga vaga : vagas) {
-        System.out.println("Vaga: " + vaga.getNumero() + " - Status: " + vaga.getStatus() + " - Tipo de veículo: " + vaga.getTipoVeiculo());
-        if ("ocupada".equals(vaga.getStatus())){
-            System.out.println("Placa do veículo: " + vaga.getPlacaVeiculo() + "\n");
-        }
-    }
-}
+
 
 }
